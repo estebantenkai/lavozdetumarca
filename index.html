@@ -1,0 +1,926 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>La voz de tu marca en LinkedIn · Tenkai Consulting</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Figtree:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+/* ═══════════════════════════════════════════════════════════
+   TENKAI · La voz de tu marca en LinkedIn
+   Pieza autogestionada: la persona se lleva un ADN de voz y prompts listos
+   para pegar en ChatGPT, Claude o Gemini. No envía datos a ningún lado.
+   Progreso guardado en localStorage. Todo por toque, sin arrastre.
+   ═══════════════════════════════════════════════════════════ */
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --i:#3b35a8;--deep:#2d2894;--mag:#8b3a8f;--coral:#d4522a;
+  --bg:#f0eff5;--ink:#1a1a2e;--sub:#555566;--muted:#888899;
+  --border:#e2e0ea;--cream:#ece9f4;--white:#ffffff;
+  --tint:#8986cb;
+  --grad:linear-gradient(135deg,#3b35a8 0%,#8b3a8f 50%,#d4522a 100%);
+  --f:'Figtree',system-ui,-apple-system,'Segoe UI',sans-serif;
+}
+html{scroll-behavior:smooth}
+body{font-family:var(--f);background:var(--bg);color:var(--ink);line-height:1.6;-webkit-font-smoothing:antialiased;overflow-x:hidden;min-height:100vh}
+button{font-family:var(--f)}
+.hidden{display:none!important}
+
+/* ── HEADER (ancho 900, igual que el resto de las piezas) ── */
+.hdr{position:sticky;top:0;z-index:50;background:#fff;border-bottom:1px solid var(--border)}
+.hdr-in{max-width:900px;margin:0 auto;padding:10px 24px;display:flex;align-items:center;justify-content:space-between;gap:16px}
+.hdr-left{display:flex;align-items:center;gap:12px}
+.hdr-left img{width:42px;height:42px;border-radius:9px;display:block}
+.hdr-brand{font-size:13px;font-weight:800;letter-spacing:.22em;text-transform:uppercase;background:var(--grad);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;line-height:1.1}
+.hdr-sub{font-size:9px;font-weight:600;letter-spacing:.18em;text-transform:uppercase;color:var(--muted)}
+.prog-wrap{display:flex;align-items:center;gap:10px;font-size:11px;font-weight:600;color:var(--muted)}
+.prog-bar{width:110px;height:5px;border-radius:3px;background:var(--border);overflow:hidden}
+.prog-fill{height:100%;background:var(--i);border-radius:3px;transition:width .4s ease}
+
+/* ── LAYOUT, HERO (índigo sólido) Y TEXTOS ──────────────── */
+.wrap{max-width:780px;margin:0 auto;padding:0 24px}
+.wrap-wide{max-width:900px}
+.sup{font-size:9.5px;font-weight:700;letter-spacing:.26em;text-transform:uppercase;color:var(--i)}
+.hero{background:var(--i);color:#fff;padding:46px 0 40px}
+.hero .sup{color:rgba(255,255,255,.5);margin-bottom:12px}
+.hero-bold{display:block;font-size:clamp(28px,5.2vw,38px);font-weight:800;letter-spacing:-.5px;color:#fff;line-height:1.1}
+.hero-slim{padding:26px 0 24px}
+.hero-slim .sup{margin-bottom:8px}
+.hero-slim .hero-bold{font-size:clamp(24px,4.4vw,30px)}
+.page{display:none}.page.on{display:block}
+.sec{padding:32px 0 52px}
+.sec-title{font-size:24px;font-weight:800;letter-spacing:-.4px;line-height:1.2;color:var(--ink);margin:2px 0 0}
+.sec-desc{font-size:15px;color:var(--sub);line-height:1.75;max-width:640px;margin:14px 0 22px}
+.sec-desc strong,.intro-p strong{color:var(--ink);font-weight:700}
+.intro-p{font-size:15px;line-height:1.8;color:var(--sub);margin-bottom:16px;max-width:620px}
+.chips-info{display:flex;flex-wrap:wrap;gap:10px;margin:0 0 28px}
+.info-pill{background:#fff;border:1px solid var(--border);border-radius:24px;padding:8px 16px;font-size:12.5px;font-weight:600;color:var(--sub)}
+.info-pill strong{color:var(--i);font-weight:800}
+.lbl{display:block;font-size:10px;font-weight:700;letter-spacing:.2em;text-transform:uppercase;color:var(--sub);margin-bottom:8px}
+.sec-lbl{font-size:10px;font-weight:700;letter-spacing:.24em;text-transform:uppercase;color:var(--muted);margin:34px 0 14px;padding-bottom:11px;border-bottom:1px solid var(--border)}
+
+/* ── BOTONES Y CAMPOS ──────────────────────────────────── */
+.btn-row{display:flex;gap:12px;flex-wrap:wrap;align-items:center;justify-content:space-between;margin-top:30px}
+.btn{display:inline-flex;align-items:center;gap:8px;padding:12px 26px;background:var(--i);color:#fff;border:none;border-radius:24px;font-size:14px;font-weight:700;cursor:pointer;transition:all .2s}
+.btn:hover{background:var(--deep);transform:translateY(-1px)}
+.btn:disabled{background:var(--border);color:var(--muted);cursor:not-allowed;transform:none}
+.btn-ghost{display:inline-flex;align-items:center;gap:7px;padding:9px 18px;background:transparent;color:var(--muted);border:1px solid var(--border);border-radius:20px;font-size:13px;font-weight:500;cursor:pointer;transition:all .2s}
+.btn-ghost:hover{color:var(--ink);border-color:var(--ink)}
+.btn-ghost:disabled{opacity:.45;cursor:not-allowed}
+.btn-outline{display:inline-flex;align-items:center;gap:7px;padding:10px 20px;background:#fff;color:var(--i);border:2px solid var(--i);border-radius:24px;font-size:13px;font-weight:700;cursor:pointer;transition:all .2s}
+.btn-outline:hover{background:var(--i);color:#fff}
+.btn-outline.done{background:var(--i);color:#fff}
+.err{display:none;margin-top:16px;padding:11px 16px;border-left:4px solid var(--coral);background:#fff;border-radius:0 10px 10px 0;font-size:13.5px;color:var(--ink)}
+.err.show{display:block}
+.txt-in{width:100%;max-width:420px;padding:13px 17px;display:block;margin-bottom:6px;font-family:var(--f);font-size:17px;font-weight:600;color:var(--ink);background:#fff;border:1.5px solid var(--border);border-radius:12px;outline:none;transition:border-color .2s}
+.txt-in:focus{border-color:var(--i)}
+.txt-in::placeholder{color:#b6b3c4;font-weight:400}
+.ta{width:100%;min-height:92px;padding:13px 16px;font-family:var(--f);font-size:15px;font-weight:500;line-height:1.6;color:var(--ink);background:#fff;border:1.5px solid var(--border);border-radius:12px;outline:none;resize:vertical;transition:border-color .2s}
+.ta:focus{border-color:var(--i)}
+.ta::placeholder{color:#b6b3c4;font-weight:400}
+.field{margin-bottom:22px}
+.field-q{font-size:15px;font-weight:800;color:var(--ink);margin-bottom:3px}
+.field-h{font-size:12.5px;color:var(--muted);margin-bottom:9px;line-height:1.55}
+
+/* ── INTRO ─────────────────────────────────────────────── */
+.get-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px;margin:6px 0 26px}
+.get{background:#fff;border:1px solid var(--border);border-top:4px solid var(--gc);border-radius:14px;padding:14px 16px}
+.get-t{font-size:14px;font-weight:800;color:var(--ink);margin-bottom:4px}
+.get-b{font-size:12.5px;color:var(--muted);line-height:1.55}
+.crit{display:flex;flex-direction:column;gap:10px;margin:0 0 28px;max-width:640px}
+.crit-i{display:flex;gap:14px;background:#fff;border:1px solid var(--border);border-radius:12px;padding:13px 16px}
+.crit-n{font-size:12px;font-weight:800;color:var(--i);letter-spacing:.1em;padding-top:2px}
+.crit-t{font-size:14px;font-weight:800;color:var(--ink)}
+.crit-q{font-size:13px;color:var(--sub);line-height:1.6;margin-top:2px}
+.seg{display:flex;gap:6px;background:var(--cream);padding:5px;border-radius:24px;max-width:420px;margin-bottom:6px}
+.seg button{flex:1;padding:9px 12px;border:none;background:transparent;border-radius:20px;font-size:13px;font-weight:700;color:var(--sub);cursor:pointer;transition:all .15s}
+.seg button.on{background:var(--i);color:#fff}
+.help{font-size:12px;color:var(--muted);margin-bottom:22px;max-width:520px;line-height:1.55}
+
+/* ── PASO 1: OBJETIVO ──────────────────────────────────── */
+.goals{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:28px}
+.goal{display:flex;flex-direction:column;gap:2px;text-align:left;background:#fff;border:1.5px solid var(--border);border-radius:14px;padding:14px 18px;cursor:pointer;transition:all .15s}
+.goal:hover{border-color:var(--i)}
+.goal.on{border-color:var(--i);background:#f7f6fd;box-shadow:inset 4px 0 0 var(--i)}
+.goal-t{font-size:14.5px;font-weight:800;color:var(--ink)}
+.goal-b{font-size:12.5px;color:var(--muted);line-height:1.5}
+
+/* ── PASO 2: HISTORIA ──────────────────────────────────── */
+.story{display:flex;flex-direction:column;gap:14px}
+.sc{background:#fff;border:1px solid var(--border);border-left:5px solid var(--sc);border-radius:0 14px 14px 0;padding:18px 20px}
+.sc-h{display:flex;gap:12px;align-items:center;margin-bottom:4px}
+.sc-n{width:28px;height:28px;border-radius:50%;background:var(--sc);color:#fff;font-size:13px;font-weight:800;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.sc-t{font-size:15px;font-weight:800;color:var(--ink)}
+.sc-q{font-size:13.5px;color:var(--sub);line-height:1.6;margin:2px 0 10px 40px}
+.sc .ta{min-height:80px}
+.sc-tip{font-size:12px;color:var(--muted);line-height:1.55;margin-top:8px}
+
+/* ── PASO 3: VOZ ───────────────────────────────────────── */
+.vcard{background:#fff;border:1px solid var(--border);border-radius:16px;padding:22px 24px}
+.vbar{height:5px;border-radius:3px;background:var(--border);overflow:hidden;margin-bottom:18px}
+.vbar i{display:block;height:100%;background:var(--i);border-radius:3px;transition:width .3s}
+.vqn{font-size:10px;font-weight:700;letter-spacing:.2em;text-transform:uppercase;color:var(--muted);margin-bottom:6px}
+.vq{font-size:19px;font-weight:800;letter-spacing:-.2px;line-height:1.35;color:var(--ink);margin-bottom:16px}
+.vopts{display:flex;flex-direction:column;gap:9px}
+.vopt{display:flex;align-items:center;gap:12px;text-align:left;width:100%;background:#fff;border:1.5px solid var(--border);border-radius:12px;padding:13px 16px;font-size:14.5px;font-weight:600;color:var(--ink);cursor:pointer;transition:all .15s}
+.vopt:hover{border-color:var(--i)}
+.vopt.sel{border-color:var(--i);background:#f7f6fd}
+.vdot{width:16px;height:16px;border-radius:50%;border:2px solid var(--border);flex-shrink:0}
+.vopt.sel .vdot{border-color:var(--i);background:var(--i);box-shadow:inset 0 0 0 3px #fff}
+.vnav{display:flex;justify-content:space-between;margin-top:16px}
+.vres{border-top:6px solid var(--vc);border-radius:16px}
+.vres-eye{font-size:10px;font-weight:700;letter-spacing:.24em;text-transform:uppercase;color:var(--muted);margin-bottom:6px}
+.vres-t{font-size:26px;font-weight:800;letter-spacing:-.4px;color:var(--ink);margin-bottom:8px}
+.vres-d{font-size:14.5px;line-height:1.75;color:var(--sub);margin-bottom:18px}
+.rules{display:flex;flex-direction:column;gap:9px;margin-bottom:6px}
+.rule{display:flex;gap:12px;align-items:flex-start}
+.rule-n{width:24px;height:24px;border-radius:50%;background:var(--vc);color:#fff;font-size:12px;font-weight:800;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.rule-t{font-size:14px;line-height:1.55;color:var(--ink);font-weight:600;padding-top:2px}
+.vagain{margin-top:16px;background:none;border:none;font-size:12.5px;font-weight:600;color:var(--muted);text-decoration:underline;cursor:pointer}
+.vagain:hover{color:var(--i)}
+.sample{margin-top:22px;background:#fff;border:1px solid var(--border);border-left:5px solid var(--coral);border-radius:0 14px 14px 0;padding:18px 20px}
+.sample .field-q{margin-bottom:3px}
+.sample .ta{min-height:130px}
+.cnt{font-size:11.5px;color:var(--muted);text-align:right;margin-top:5px}
+
+/* ── PASO 4: KIT ───────────────────────────────────────── */
+.adn{background:var(--ink);border-radius:16px;overflow:hidden}
+.adn-bar{display:flex;align-items:center;justify-content:space-between;gap:10px;padding:10px 16px;border-bottom:1px solid rgba(255,255,255,.1)}
+.adn-name{font-size:11px;font-weight:700;letter-spacing:.14em;color:rgba(255,255,255,.5)}
+.adn-pre{padding:18px 20px;max-height:320px;overflow:auto;font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;font-size:12px;line-height:1.7;color:rgba(255,255,255,.86);white-space:pre-wrap;overflow-wrap:anywhere}
+.acts{display:flex;gap:10px;flex-wrap:wrap;margin-top:14px}
+.kcard{background:#fff;border:1px solid var(--border);border-top:5px solid var(--kc);border-radius:14px;padding:20px 22px;margin-bottom:16px}
+.kcard-t{font-size:16px;font-weight:800;color:var(--ink);margin-bottom:3px}
+.kcard-d{font-size:13.5px;color:var(--sub);line-height:1.65;margin-bottom:12px}
+.kcard .ta{min-height:170px;font-size:13px;font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;line-height:1.65;background:var(--bg)}
+.kcard .acts{margin-top:12px;align-items:center}
+.check{display:inline-flex;align-items:center;gap:8px;font-size:13px;font-weight:600;color:var(--sub);cursor:pointer}
+.check input{width:16px;height:16px;accent-color:var(--i)}
+.types{display:flex;flex-wrap:wrap;gap:8px;margin:4px 0 18px}
+.type{padding:9px 16px;border-radius:20px;border:1.5px solid var(--border);background:#fff;font-size:13px;font-weight:700;color:var(--sub);cursor:pointer;transition:all .15s}
+.type:hover{border-color:var(--i)}
+.type.on{background:var(--i);border-color:var(--i);color:#fff}
+.type-d{font-size:13px;color:var(--muted);margin:-8px 0 16px}
+.briefs{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px;margin-top:16px}
+.brief{background:var(--bg);border:1px solid var(--border);border-radius:12px;padding:14px 16px}
+.brief-t{font-size:10px;font-weight:700;letter-spacing:.2em;text-transform:uppercase;color:var(--i);margin-bottom:8px}
+.brief-r{font-size:12.5px;line-height:1.55;color:var(--sub);margin-bottom:6px}
+.brief-r b{color:var(--ink)}
+.steps3{display:flex;flex-direction:column;gap:10px;margin-bottom:6px}
+.st3{display:flex;gap:12px;align-items:flex-start;font-size:14px;color:var(--ink);line-height:1.55}
+.st3 i{font-style:normal;width:24px;height:24px;border-radius:50%;background:var(--i);color:#fff;font-size:12px;font-weight:800;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.cl{display:flex;flex-direction:column;gap:8px}
+.cl-i{display:flex;gap:10px;align-items:flex-start;font-size:13.5px;line-height:1.55;color:var(--sub)}
+.cl-i i{width:16px;height:16px;border:2px solid var(--vc);border-radius:5px;flex-shrink:0;margin-top:2px}
+
+/* ── REINICIO ──────────────────────────────────────────── */
+.restart{display:flex;flex-direction:column;align-items:center;gap:14px;margin:0 auto;padding:22px 24px 40px;max-width:780px}
+.restart-confirm{max-width:480px;text-align:center;background:#fff;border:1.5px solid var(--coral);border-radius:14px;padding:18px 22px}
+.restart-confirm p{font-size:13.5px;line-height:1.65;color:var(--sub);margin-bottom:14px}
+.restart-confirm strong{color:var(--ink)}
+.restart-confirm .racts{display:flex;gap:11px;flex-wrap:wrap;justify-content:center}
+
+/* ── FOOTER (placa degradé, igual que las demás piezas) ─ */
+.tk-footer{background:var(--grad);padding:38px 24px 30px;text-align:center}
+.tk-footer-in{max-width:700px;margin:0 auto}
+.tk-footer img{height:44px;width:auto;display:block;margin:0 auto 10px}
+.tk-tag{font-size:9px;font-weight:700;letter-spacing:.18em;text-transform:uppercase;color:rgba(255,255,255,.55);margin-bottom:18px}
+.tk-links{display:flex;justify-content:center;flex-wrap:wrap;gap:4px 18px}
+.tk-links a{font-size:11.5px;font-weight:600;color:rgba(255,255,255,.78);text-decoration:none;white-space:nowrap}
+.tk-links a:hover{color:#fff}
+.tk-copy{font-size:9.5px;letter-spacing:.14em;color:rgba(255,255,255,.4);margin-top:18px}
+
+@keyframes fUp{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:translateY(0)}}
+.fup{animation:fUp .3s ease both}
+
+@media(max-width:700px){.briefs,.get-grid{grid-template-columns:1fr}.goals{grid-template-columns:1fr}}
+@media(max-width:600px){
+  .hdr-in{padding:10px 16px}.wrap{padding:0 16px}
+  .prog-bar{width:60px}
+  .vcard{padding:18px}
+}
+
+/* ── Extras de esta pieza ──────────────────────────────── */
+.pair{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-left:40px}
+.pair .ta{min-height:84px}
+.hooks{display:flex;flex-direction:column;gap:6px;margin:4px 0 16px}
+.hook{text-align:left;padding:10px 14px;border-radius:12px;border:1.5px solid var(--border);background:#fff;font-size:13px;font-weight:600;color:var(--sub);cursor:pointer;transition:all .15s;line-height:1.5}
+.hook:hover{border-color:var(--i)}
+.hook.on{border-color:var(--i);background:#f7f6fd;color:var(--ink);box-shadow:inset 4px 0 0 var(--i)}
+#planDoc{display:none}
+@media(max-width:600px){.pair{grid-template-columns:1fr;margin-left:0}}
+/* ── PDF del plan (A4 vertical) ────────────────────────── */
+@page{size:A4 portrait;margin:14mm}
+@media print{
+  *{-webkit-print-color-adjust:exact!important;print-color-adjust:exact!important}
+  html,body{background:#fff!important}
+  .hdr,main,.restart,.tk-footer{display:none!important}
+  #planDoc{display:block;font-family:var(--f);color:var(--ink)}
+  .pd-head{display:flex;align-items:center;gap:12px;padding-bottom:12px;margin-bottom:14px;border-bottom:1px solid var(--border)}
+  .pd-head img{width:42px;height:42px;border-radius:9px}
+  .pd-t{font-size:15px;font-weight:800}
+  .pd-s{font-size:10px;font-weight:700;letter-spacing:.2em;text-transform:uppercase;color:var(--muted)}
+  .pd-goal{font-size:12.5px;line-height:1.6;color:var(--sub);margin-bottom:6px}
+  .pd-goal b{color:var(--ink)}
+  .pd-sec{font-size:10px;font-weight:700;letter-spacing:.24em;text-transform:uppercase;color:var(--i);margin:18px 0 8px;padding-bottom:6px;border-bottom:1px solid var(--border);break-after:avoid}
+  .pd-tbl{width:100%;border-collapse:collapse;font-size:11.5px;line-height:1.5}
+  .pd-tbl th,.pd-tbl td{text-align:left;vertical-align:top;padding:6px 8px;border-bottom:1px solid var(--cream)}
+  .pd-tbl th{width:28%;font-weight:700;color:var(--sub)}
+  .pd-tbl th.pd-c{color:var(--i)}.pd-tbl th.pd-n{color:var(--coral)}
+  .pd-tbl tr{break-inside:avoid}
+  .pd-p{font-size:11.5px;line-height:1.6;color:var(--sub);margin-bottom:6px}
+  .pd-p b{color:var(--ink)}
+  .pd-ul{margin-left:18px;font-size:11.5px;line-height:1.7;color:var(--ink)}
+  .pd-foot{margin-top:20px;padding-top:10px;border-top:1px solid var(--border);text-align:center;font-size:10px;letter-spacing:.1em;color:var(--muted)}
+}
+</style>
+</head>
+<body>
+
+<header class="hdr">
+  <div class="hdr-in">
+    <div class="hdr-left">
+      <img src="data:image/jpeg;base64,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" alt="Tenkai" width="42" height="42" style="width:42px;height:42px;border-radius:9px;">
+      <div><div class="hdr-brand">Tenkai</div><div class="hdr-sub">Consulting</div></div>
+    </div>
+    <div class="prog-wrap"><span id="progTxt">LinkedIn</span><div class="prog-bar hidden" id="progBar"><div class="prog-fill" id="progFill" style="width:0%"></div></div></div>
+  </div>
+</header>
+
+<main>
+
+<!-- ═════════ INTRO ═════════ -->
+<section id="pgIntro" class="page on">
+  <div class="hero"><div class="wrap">
+    <p class="sup">Marca profesional · Tenkai Consulting</p>
+    <span class="hero-bold">La voz de tu marca en LinkedIn</span>
+  </div></div>
+  <div class="wrap"><div class="sec">
+    <p class="intro-p">Para quienes ofrecen un servicio o trabajan por cuenta propia y quieren que LinkedIn les traiga las conversaciones correctas. Vas a definir <strong>qué ofrecés, qué pensás y cómo hablás</strong>, y la herramienta lo convierte en material listo para usar con una IA.</p>
+    <p class="sup" style="margin:22px 0 10px">Al final te llevás</p>
+    <div class="get-grid" id="getGrid"></div>
+    <p class="sup" style="margin:0 0 10px">Tres ideas que guían el ejercicio</p>
+    <div class="crit" id="crit"></div>
+    <div class="chips-info">
+      <span class="info-pill"><strong>4</strong> pasos</span>
+      <span class="info-pill"><strong>30 a 45</strong> minutos</span>
+      <span class="info-pill">Tu avance <strong>se guarda</strong> en este dispositivo</span>
+    </div>
+    <label class="lbl" for="nameInput">Tu nombre</label>
+    <input class="txt-in" type="text" id="nameInput" placeholder="¿Cómo te llamás?" autocomplete="off" maxlength="60" style="margin-bottom:22px">
+    <label class="lbl">Cómo querés que la IA escriba sobre vos</label>
+    <div class="seg" id="genderSeg">
+      <button type="button" data-action="gender" data-g="F">Femenina</button>
+      <button type="button" data-action="gender" data-g="M">Masculina</button>
+      <button type="button" data-action="gender" data-g="N">Neutra</button>
+    </div>
+    <p class="help">Define la concordancia de género en lo que genere (por ejemplo, “entusiasmada”, “entusiasmado” o una forma sin género).</p>
+    <div class="err" id="errIntro" role="alert"></div>
+    <div class="btn-row"><span></span>
+      <button class="btn" data-action="start" type="button">Comenzar <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6"/></svg></button>
+    </div>
+  </div></div>
+</section>
+
+<!-- ═════════ PASO 1 · POSICIONAMIENTO ═════════ -->
+<section id="pgPos" class="page">
+  <div class="hero hero-slim"><div class="wrap">
+    <p class="sup">Paso 1 de 4 · La voz de tu marca</p>
+    <span class="hero-bold">Tu posicionamiento</span>
+  </div></div>
+  <div class="wrap"><div class="sec fup">
+    <h2 class="sec-title">¿Qué querés lograr con LinkedIn?</h2>
+    <p class="sec-desc">El mismo perfil se escribe distinto según lo que busques. Elegí lo que más se acerque a este momento.</p>
+    <div class="goals" id="goals"></div>
+    <h2 class="sec-title" style="margin-bottom:6px">Qué ofrecés, para quién y por qué es distinto</h2>
+    <p class="sec-desc" style="margin-top:8px">Posicionarte no es inventarte un personaje: es encontrar el cruce entre lo que hacés, para quién lo hacés y qué tiene de distinto tu forma de hacerlo. Cuanto más específico, mejor.</p>
+    <div id="posFields"></div>
+    <div class="err" id="errPos" role="alert"></div>
+    <div class="btn-row"><button class="btn-ghost" type="button" data-action="go" data-v="intro">← Atrás</button><button class="btn" type="button" data-action="pos-next">Continuar <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6"/></svg></button></div>
+  </div></div>
+</section>
+
+<!-- ═════════ PASO 2 · POSTURA ═════════ -->
+<section id="pgStance" class="page">
+  <div class="hero hero-slim"><div class="wrap">
+    <p class="sup">Paso 2 de 4 · La voz de tu marca</p>
+    <span class="hero-bold">Tu postura</span>
+  </div></div>
+  <div class="wrap"><div class="sec fup">
+    <h2 class="sec-title">¿Qué pensás de verdad?</h2>
+    <p class="sec-desc">Nadie sigue a una persona neutral: se sigue a quien tiene punto de vista. Es el ejercicio más incómodo y el más útil. <strong>Completá al menos dos criterios</strong>, aunque sea una sola de las dos columnas.</p>
+    <div class="story" id="stanceBox"></div>
+    <div class="err" id="errStance" role="alert"></div>
+    <div class="btn-row"><button class="btn-ghost" type="button" data-action="go" data-v="pos">← Atrás</button><button class="btn" type="button" data-action="stance-next">Continuar <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6"/></svg></button></div>
+  </div></div>
+</section>
+
+<!-- ═════════ PASO 3 · HISTORIA ═════════ -->
+<section id="pgStory" class="page">
+  <div class="hero hero-slim"><div class="wrap">
+    <p class="sup">Paso 3 de 4 · La voz de tu marca</p>
+    <span class="hero-bold">Tu historia</span>
+  </div></div>
+  <div class="wrap"><div class="sec fup">
+    <h2 class="sec-title">El puente entre lo que viviste y lo que ofrecés</h2>
+    <p class="sec-desc">Las personas no compran servicios: conectan con personas. Contá tu camino en cinco momentos, con respuestas breves. <strong>Completá al menos tres.</strong></p>
+    <div class="story" id="storyBox"></div>
+    <div class="err" id="errStory" role="alert"></div>
+    <div class="btn-row"><button class="btn-ghost" type="button" data-action="go" data-v="stance">← Atrás</button><button class="btn" type="button" data-action="story-next">Continuar <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6"/></svg></button></div>
+  </div></div>
+</section>
+
+<!-- ═════════ PASO 4 · VOZ ═════════ -->
+<section id="pgVoice" class="page">
+  <div class="hero hero-slim"><div class="wrap">
+    <p class="sup">Paso 4 de 4 · La voz de tu marca</p>
+    <span class="hero-bold">Tu voz natural</span>
+  </div></div>
+  <div class="wrap"><div class="sec fup">
+    <h2 class="sec-title">Qué lugar ocupás cuando publicás</h2>
+    <p class="sec-desc">No es un rol fijo: es el punto de partida para que tu contenido tenga coherencia. Respondé seis preguntas rápidas y, si podés, <strong>sumá un texto tuyo</strong>: es lo que mejor le enseña a la IA cómo escribís.</p>
+    <div id="voiceBox"></div>
+    <div class="sample">
+      <p class="field-q">Una muestra de tu escritura <span style="font-weight:500;color:var(--muted)">(opcional, muy recomendable)</span></p>
+      <p class="field-h">Pegá uno o dos textos que hayas escrito vos: un mail largo, un post anterior, un mensaje a un cliente. Cuanto más natural, mejor.</p>
+      <textarea class="ta" id="sampleIn" maxlength="3000" placeholder="Pegá acá tu texto…"></textarea>
+      <div class="cnt" id="sampleCnt">0 / 3000</div>
+    </div>
+    <div class="err" id="errVoice" role="alert"></div>
+    <div class="btn-row"><button class="btn-ghost" type="button" data-action="go" data-v="story">← Atrás</button><button class="btn" type="button" data-action="voice-next">Ver mi kit <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6"/></svg></button></div>
+  </div></div>
+</section>
+
+<!-- ═════════ KIT ═════════ -->
+<section id="pgKit" class="page">
+  <div class="hero hero-slim"><div class="wrap wrap-wide">
+    <p class="sup">Tu kit · La voz de tu marca</p>
+    <span class="hero-bold" id="kitTitle">Tu kit de marca</span>
+  </div></div>
+  <div class="wrap wrap-wide"><div class="sec fup">
+    <div class="steps3">
+      <div class="st3"><i>1</i><span>Copiá un prompt de abajo (ya incluye tu ADN de marca).</span></div>
+      <div class="st3"><i>2</i><span>Pegalo en ChatGPT, Claude o Gemini.</span></div>
+      <div class="st3"><i>3</i><span>Revisá el resultado con tu checklist antes de publicar: es un borrador, no el texto final.</span></div>
+    </div>
+
+    <p class="sec-lbl">Tu ADN de marca</p>
+    <div class="adn"><div class="adn-bar"><span class="adn-name">adn-de-marca.txt</span></div><pre class="adn-pre" id="adnPre"></pre></div>
+    <div class="acts"><button class="btn-outline" type="button" data-action="copy" data-what="adn" id="cpAdn">Copiar mi ADN</button><button class="btn-ghost" type="button" data-action="download">Descargar como .txt</button></div>
+
+    <p class="sec-lbl">Prompts listos para pegar</p>
+    <div class="kcard" style="--kc:#3b35a8"><p class="kcard-t">Titular de tu perfil</p><p class="kcard-d">Tres opciones que digan qué ofrecés y para quién, con palabras que tu cliente ideal usaría para buscarte.</p><textarea class="ta" id="pTitular" readonly></textarea><div class="acts"><button class="btn-outline" type="button" data-action="copy" data-what="titular" id="cpTitular">Copiar con mi ADN</button></div></div>
+    <div class="kcard" style="--kc:#8986cb"><p class="kcard-t">Sección “Acerca de”</p><p class="kcard-d">Un texto en primera persona que une tu historia, tu postura y lo que ofrecés, sin clichés.</p><textarea class="ta" id="pAcerca" readonly></textarea><div class="acts"><button class="btn-outline" type="button" data-action="copy" data-what="acerca" id="cpAcerca">Copiar con mi ADN</button></div></div>
+
+    <div class="kcard" style="--kc:#d4522a">
+      <p class="kcard-t">Tu primer post</p>
+      <p class="kcard-d">Elegí el tipo de post y el tono. Esto ordena la materia prima para que la IA no tenga que inventar nada.</p>
+      <label class="lbl">Tipo de post</label>
+      <div class="types" id="types"></div>
+      <p class="type-d" id="typeDesc"></p>
+      <label class="lbl">Tono</label>
+      <div class="types" id="tones"></div>
+      <label class="lbl">Gancho para abrir <span style="text-transform:none;letter-spacing:0;font-weight:500">(opcional: tocá uno para usarlo como punto de partida)</span></label>
+      <div class="hooks" id="hooks"></div>
+      <div class="acts" style="margin:6px 0 14px"><button class="btn-ghost" type="button" data-action="prefill" id="prefillBtn">Traer lo que ya escribí</button><span class="type-d" id="prefillNote" style="margin:0"></span></div>
+      <div id="genFields"></div>
+      <div class="acts"><button class="btn" type="button" data-action="gen">Armar la estructura</button><button class="btn-ghost" type="button" data-action="gen-clear">Limpiar</button></div>
+      <div class="err" id="errGen" role="alert"></div>
+      <div id="genOut" class="hidden" style="margin-top:18px">
+        <label class="lbl">Tu estructura lista para la IA</label>
+        <textarea class="ta" id="pPost" style="min-height:260px;font-size:13px;font-family:ui-monospace,'SF Mono','Cascadia Mono',Menlo,Consolas,monospace;background:var(--bg)"></textarea>
+        <div class="acts"><button class="btn-outline" type="button" data-action="copy" data-what="post" id="cpPost">Copiar estructura</button><label class="check"><input type="checkbox" id="inclAdn" checked> Incluir mi ADN de marca</label></div>
+        <div class="briefs" id="briefs"></div>
+      </div>
+    </div>
+
+    <p class="sec-lbl">Checklist antes de publicar</p>
+    <div class="vcard" id="checkCard" style="border-top:6px solid var(--vc)"></div>
+
+    <p class="sec-lbl">Tu plan para el encuentro</p>
+    <div class="vcard"><p class="kcard-d" style="margin-bottom:14px">Un PDF con tu posicionamiento, tu postura, tu historia y tu voz, para llevar a tu próxima reunión del proceso de diseño de carrera y trabajarlo juntos.</p><button class="btn" type="button" data-action="print"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg> Descargar mi plan (PDF)</button></div>
+
+    <div class="btn-row"><button class="btn-ghost" type="button" data-action="go" data-v="voice">← Volver a editar</button><span></span></div>
+  </div></div>
+</section>
+
+</main>
+
+<!-- Documento para imprimir (solo se ve en el PDF) -->
+<div id="planDoc"></div>
+
+<div class="restart">
+  <button class="btn-ghost" id="restartBtn" data-action="restart" type="button">Volver a iniciar</button>
+  <div class="restart-confirm hidden" id="restartConfirm">
+    <p><strong>Se va a borrar todo lo que cargaste</strong> y vas a empezar desde cero.</p>
+    <div class="racts"><button class="btn" data-action="restart-yes" type="button">Sí, empezar de nuevo</button><button class="btn-ghost" data-action="restart-no" type="button">Cancelar</button></div>
+  </div>
+</div>
+
+<footer class="tk-footer" id="ftr"><div class="tk-footer-in">
+  <a href="https://www.tenkai.com.ar" target="_blank" rel="noopener"><img src="data:image/png;base64,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" alt="Tenkai Consulting"></a>
+  <div class="tk-tag">Diseño de Carrera Profesional</div>
+  <nav class="tk-links">
+    <a href="https://www.tenkai.com.ar" target="_blank" rel="noopener">tenkai.com.ar</a>
+    <a href="mailto:esteban@tenkai.com.ar">esteban@tenkai.com.ar</a>
+    <a href="https://wa.me/5491170657746" target="_blank" rel="noopener">WhatsApp</a>
+    <a href="https://www.linkedin.com/in/toledoesteban" target="_blank" rel="noopener">LinkedIn</a>
+    <a href="https://www.instagram.com/esteban.tenkai" target="_blank" rel="noopener">Instagram</a>
+    <a href="https://www.tiktok.com/@esteban.tenkai" target="_blank" rel="noopener">TikTok</a>
+    <a href="https://www.facebook.com/tenkai.esteban" target="_blank" rel="noopener">Facebook</a>
+  </nav>
+  <div class="tk-copy">© 2026 TENKAI CONSULTING</div>
+</div></footer>
+
+<script>
+(function(){
+'use strict';
+
+var LS='tenkai_marca_linkedin_v1';
+var C={indigo:'#3b35a8',coral:'#d4522a',tint:'#8986cb',ink:'#1a1a2e'};
+
+/* ── Contenido ───────────────────────────────────────────── */
+var GETS=[
+  {t:'Tu ADN de marca',b:'Un bloque con tu posicionamiento, tu postura, tu historia y tu voz, para que la IA te conozca.',c:C.indigo},
+  {t:'Prompts listos',b:'Titular, “Acerca de” y un primer post con el tono y el gancho que elijas.',c:C.tint},
+  {t:'Un plan en PDF',b:'Tu material ordenado para llevar a la reunión y trabajarlo con tu coach.',c:C.coral}
+];
+var CRIT=[
+  {n:'01',t:'Las conversaciones entre personas suenan a personas',q:'¿Tus mensajes tienen la calidez de una charla real o suenan a comunicado?'},
+  {n:'02',t:'Las personas reconocen una voz',q:'Si alguien describiera tu estilo en tres palabras, ¿coincidiría con lo que querés transmitir?'},
+  {n:'03',t:'Las marcas necesitan relajarse',q:'¿Cuál es el error más valioso que cometiste y qué aprendiste de él?'}
+];
+var GOALS=[
+  {id:'clientes',t:'Atraer clientes',b:'Que quien necesita lo que ofrezco me encuentre.',txt:'Quiero atraer clientes: que quienes necesitan lo que ofrezco me encuentren y me contacten'},
+  {id:'alianzas',t:'Generar alianzas',b:'Colaboraciones, derivaciones y comunidad.',txt:'Quiero generar alianzas, colaboraciones y derivaciones con colegas y organizaciones'},
+  {id:'referente',t:'Ser referente',b:'Charlas, medios y reconocimiento en mi tema.',txt:'Quiero posicionarme como referente en mi tema para recibir invitaciones a charlas, medios y proyectos'},
+  {id:'lanzar',t:'Lanzar un servicio',b:'Estoy por empezar y quiero llegar con una voz clara.',txt:'Estoy por lanzar un servicio y quiero llegar con un posicionamiento y una voz claros'}
+];
+var POS=[
+  {id:'ofrece',q:'¿Qué ofrecés?',h:'El servicio o la propuesta, dicha de forma simple.',ph:'Ej.: Acompañamiento individual para rediseñar la carrera profesional.',req:1},
+  {id:'cliente',q:'¿Para quién?',h:'Cuanto más específico, mejor: no “profesionales”, sino qué profesionales y en qué momento.',ph:'Ej.: Profesionales con más de diez años de trayectoria que sienten que se estancaron.',req:1},
+  {id:'resultado',q:'¿Qué resultado concreto logran con vos?',h:'Lo tangible: qué cambia en su vida o en su trabajo. (Opcional)',ph:'Ej.: Más claridad para decidir, conversaciones laborales mejores, un próximo paso definido.'},
+  {id:'emocion',q:'¿Cómo se sienten después?',h:'La emoción que resolvés: seguridad, tranquilidad, confianza. (Opcional)',ph:'Ej.: Dejan de sentir que improvisan y empiezan a sentir que eligen.'},
+  {id:'dif',q:'¿Qué hace distinto tu enfoque?',h:'Lo que no encontrarían igual en otra persona que ofrece lo mismo.',ph:'Ej.: Combino experiencia real en selección de talento con metodología de coaching.',req:1},
+  {id:'prueba',q:'¿Qué respalda lo que decís?',h:'Experiencia, clientes, formación, medios, eventos. (Opcional)',ph:'Ej.: Catorce años en admisiones, más de doscientas personas acompañadas.'}
+];
+var STANCE=[
+  {t:'Qué priorizás en tu trabajo',h:'Lo que cuidás aunque no sea lo que está de moda.'},
+  {t:'Qué significa trabajar bien en lo tuyo',h:'Tu definición de “hacerlo bien” frente a la del resto.'},
+  {t:'Cómo entendés el éxito',h:'Qué cuenta y qué no cuenta para vos.'},
+  {t:'Qué nunca harías',h:'Tus límites profesionales.'},
+  {t:'Cómo ves el largo plazo',h:'Qué construís aunque no se vea hoy.'}
+];
+var STORY=[
+  {id:'h1',t:'El punto de partida',q:'¿Cuál era tu situación y qué desafío enfrentabas?',tip:'Ejemplo: trabajé diez años en una empresa donde crecí mucho, pero llegué a un punto en el que ya no aprendía nada nuevo.',c:C.indigo},
+  {id:'h2',t:'El quiebre',q:'¿Qué pasó para que decidieras que algo tenía que cambiar, y cómo te sentías?',tip:'Ejemplo: un mentor me preguntó qué haría mañana si el dinero no fuera un problema y no tuve respuesta. Ese silencio fue el clic.',c:C.coral},
+  {id:'h3',t:'Los primeros pasos',q:'¿Qué hiciste primero? ¿Qué personas, herramientas o aprendizajes te ayudaron?',tip:'Ejemplo: tomé un curso de liderazgo, empecé coaching y en seis meses encontré un camino que no sabía que existía.',c:C.tint},
+  {id:'h4',t:'Los resultados concretos',q:'¿Qué lograste gracias a ese cambio? Sé específico.',tip:'Ejemplo: en dieciocho meses pasé de empleo frustrado a consultoría independiente con doce clientes recurrentes.',c:C.ink},
+  {id:'h5',t:'Hoy y a quién ayudás',q:'¿Dónde estás ahora y cómo tu experiencia ayuda a quien hoy está donde vos estabas?',tip:'Ejemplo: hoy elijo con quién trabajo y desde dónde, y acompaño a profesionales a construir una carrera que les pertenezca.',c:C.indigo}
+];
+var ROLE_QS=[
+  {q:'Cuando vas a publicar algo, ¿qué es lo primero que pensás?',opts:[
+    {t:'Qué aprendizaje puedo compartir desde mi experiencia',k:'L'},
+    {t:'Qué está pasando en mi sector que vale la pena comentar',k:'R'},
+    {t:'Qué idea nueva puedo proponer que casi nadie está viendo',k:'I'}]},
+  {q:'¿Cuál de estos posts te sale más natural?',opts:[
+    {t:'“Lo que aprendí después de diez años haciendo esto…”',k:'L'},
+    {t:'“Tres datos sobre [tendencia] que casi nadie está mirando”',k:'R'},
+    {t:'“Probé algo que nadie hace y esto pasó”',k:'I'}]},
+  {q:'Tu audiencia viene a verte principalmente para…',opts:[
+    {t:'Inspirarse y entender cómo llegaste adonde estás',k:'L'},
+    {t:'Estar al día con lo que pasa en el sector',k:'R'},
+    {t:'Ver qué estás probando y hacia dónde va lo nuevo',k:'I'}]},
+  {q:'Cuando un post no funciona, ¿cuál es tu primera reacción?',opts:[
+    {t:'Revisar si el relato fue lo bastante concreto y humano',k:'L'},
+    {t:'Chequear si el tema era realmente relevante para mi audiencia',k:'R'},
+    {t:'Preguntarme si la idea estaba demasiado adelantada',k:'I'}]},
+  {q:'De un comentario, ¿qué te da más satisfacción?',opts:[
+    {t:'Que le sirvió para tomar una decisión o cambiar algo',k:'L'},
+    {t:'Que le ayudó a entender algo que no tenía claro',k:'R'},
+    {t:'Que le abrió una perspectiva que no había considerado',k:'I'}]},
+  {q:'¿Qué te diferencia de otras personas que publican en tu sector?',opts:[
+    {t:'La profundidad que da haberlo vivido de cerca',k:'L'},
+    {t:'La constancia y el rigor con que sigo lo que pasa',k:'R'},
+    {t:'La originalidad de mi enfoque y mis propuestas',k:'I'}]}
+];
+var ROLES={
+  L:{nombre:'Voz de experiencia',color:C.coral,
+    desc:'Tu posicionamiento descansa en lo que viviste. Tenés autoridad ganada y tu audiencia te sigue para aprender de tu camino. Tu contenido más fuerte muestra quién eras antes y quién sos hoy. Tu mayor riesgo: quedarte en la anécdota sin decir qué sirve de ella.',
+    reglas:['Publicá casos reales donde tu experiencia marcó la diferencia','Compartí aprendizajes de errores, no solo de éxitos','Usá el formato antes y después para mostrar una transformación concreta'],
+    check:['¿Cuenta algo que pasó o solo una conclusión general?','¿Hay una cifra, un detalle o un momento concreto?','¿Mi experiencia le sirve a otra persona para decidir algo?','¿Suena a anécdota de sobremesa o a una lección útil?']},
+  R:{nombre:'Voz analítica',color:C.indigo,
+    desc:'Tu valor está en la curaduría y el análisis: tu audiencia confía en vos para entender qué pasa en el sector y espera que lo expliques mejor que nadie. Tu mayor riesgo: sonar a artículo de revista sin punto de vista propio.',
+    reglas:['Comentá novedades del sector con un punto de vista propio','Resumí temas complejos con lenguaje accesible','Citá fuentes, pero sumá siempre tu interpretación'],
+    check:['¿Tiene al menos una opinión mía que no sea obvia?','¿Cito la fuente o digo “según estudios”? Si cito, lo pongo; si no, lo saco','¿Suena a artículo o a conversación? Apuntar a conversación','¿Hay algo en el post que solo yo podría haber escrito?']},
+  I:{nombre:'Voz innovadora',color:C.tint,
+    desc:'Tu diferencial es la ruptura: desafiás lo establecido y proponés caminos que todavía no existen. Tu audiencia te sigue para ver adónde vas. Tu mayor riesgo: que la idea sea nueva pero no quede claro por qué funciona.',
+    reglas:['Tomá postura sobre tendencias emergentes antes que el resto','Mostrá procesos en desarrollo, no solo resultados finales','Invitá al debate: tus ideas más incómodas son las más valiosas'],
+    check:['¿Explico por qué mi idea funciona o solo digo que es distinta?','¿Hay un ejemplo concreto o una prueba?','¿Dejo lugar a la objeción o suena a dogma?','¿Se entiende en las primeras tres líneas?']}
+};
+var TONOS=[
+  {id:'directo',t:'Directo',x:'Tono directo: ir al punto desde la primera línea, sin preámbulos.'},
+  {id:'reflexivo',t:'Reflexivo',x:'Tono reflexivo: pensando en voz alta, con calma y sin dar lecciones.'},
+  {id:'provocador',t:'Provocador',x:'Tono provocador: una afirmación que incomode un poco, respaldada con razones y sin agredir a nadie.'},
+  {id:'vulnerable',t:'Vulnerable',x:'Tono vulnerable: honesto sobre lo que costó o lo que no sabía, sin dramatizar.'},
+  {id:'practico',t:'Práctico',x:'Tono práctico: concreto y accionable, con un ejemplo o pasos que se puedan aplicar hoy.'}
+];
+var HOOKS={
+  historia:['Hace [X] años tomé una decisión que parecía un error.','Lo que nadie me dijo cuando empecé…','El día que entendí que me había equivocado durante años…','Me enseñaron que [creencia]. Resultó no ser cierto.'],
+  opinion:['La mayoría hace esto mal y casi nadie lo dice.','No estoy de acuerdo con el consenso sobre [tema].','Algo que está de moda en mi sector y creo que no funciona:','Hay algo en LinkedIn que me incomoda.'],
+  aprendizaje:['El aprendizaje más caro que tuve en [año] no fue un curso.','Después de [X] proyectos entendí algo que cambió todo.','Lo que enseño ahora es lo opuesto a lo que aprendí primero.','Mi mayor fracaso me dio la lección más valiosa:'],
+  error:['Cometí un error que costó [X]. Esto aprendí:','Hace [X] años hice algo que no volvería a hacer.','El consejo que les doy a todos es el que yo ignoré.','Perdí un cliente por algo que tardé años en entender:'],
+  caso:['Una persona llegó frustrada con [problema]. Tres meses después…','La pregunta que le hice a una clienta y que lo desbloqueó todo:','El patrón que veo repetirse en las personas que más avanzan:','Alguien tenía todo y no avanzaba. Esto cambió:'],
+  tip:['Lo que cambiaría si empezara hoy desde cero:','El sistema simple que uso para [resultado]:','Tres preguntas que hacen la diferencia antes de [acción]:','El hábito que más impacto tuvo en mis resultados:']
+};
+var TIPOS=[
+  {id:'historia',t:'Historia personal',d:'Tu camino, contado desde un momento concreto',b:0,extra:'',pre:'story',campos:[
+    {id:'a',l:'¿Cuál era tu situación de partida?',ph:'Ej.: Llevaba diez años en la misma empresa y había dejado de aprender.',tag:'EL PUNTO DE PARTIDA',req:1},
+    {id:'b',l:'¿Qué hizo que algo cambiara?',ph:'Ej.: Un mentor me preguntó qué haría si el dinero no fuera un problema y no supe responder.',tag:'EL QUIEBRE',req:1},
+    {id:'c',l:'¿Qué lograste después?',ph:'Ej.: En dieciocho meses tenía mi propia consultoría.',tag:'EL RESULTADO'}]},
+  {id:'opinion',t:'Opinión polémica',d:'Una postura que no todo el mundo comparte',b:2,extra:'Que mi postura quede clara desde el primer párrafo, con razones, y sin atacar a nadie.',pre:'stance',campos:[
+    {id:'a',l:'¿En qué creés?',ph:'Ej.: Creo que el mejor plan de carrera es el que se puede revisar cada tres meses.',tag:'EN QUÉ CREO',req:1},
+    {id:'b',l:'¿En qué no creés?',ph:'Ej.: No creo en los planes a cinco años en un mercado que cambia cada seis meses.',tag:'EN QUÉ NO CREO'},
+    {id:'c',l:'¿Qué viste que te llevó a pensar esto?',ph:'Ej.: Acompañé a decenas de personas que seguían un plan que ya no las representaba.',tag:'DE DÓNDE VIENE ESTA POSTURA'}]},
+  {id:'aprendizaje',t:'Aprendizaje clave',d:'Algo que descubriste y hoy aplicás',b:0,extra:'',pre:'',campos:[
+    {id:'a',l:'¿En qué contexto pasó?',ph:'Ej.: Coordinaba el cierre de un proyecto con un equipo nuevo.',tag:'CONTEXTO',req:1},
+    {id:'b',l:'¿Qué aprendiste?',ph:'Ej.: El problema no era el proceso, sino que nadie tenía claro quién decidía.',tag:'EL APRENDIZAJE',req:1},
+    {id:'c',l:'¿Qué hacés distinto desde entonces?',ph:'Ej.: Antes de arrancar, pregunto quién tiene la última palabra.',tag:'QUÉ HAGO DISTINTO'}]},
+  {id:'error',t:'Error que me enseñó',d:'Lo que salió mal y qué cambió',b:3,extra:'Que no termine con una lección de vida ni con un cierre inspiracional: que termine con lo que concretamente cambié.',pre:'',campos:[
+    {id:'a',l:'¿Qué salió mal?',ph:'Ej.: Asumí que el equipo entendía el objetivo sin verificarlo.',tag:'LO QUE SALIÓ MAL',req:1},
+    {id:'b',l:'¿Qué costó?',ph:'Ej.: Perdimos dos semanas y tuve que dar explicaciones difíciles.',tag:'EL COSTO'},
+    {id:'c',l:'¿Qué ajustaste concretamente?',ph:'Ej.: Ahora uso una checklist de arranque donde cada área dice qué espera.',tag:'LO QUE AJUSTÉ'}]},
+  {id:'caso',t:'Caso de cliente',d:'Una transformación real, sin nombres',b:2,extra:'Sin nombres ni datos que permitan identificar a la persona. El foco está en el proceso y no en presumir resultados.',pre:'',campos:[
+    {id:'a',l:'¿Con qué situación llegó la persona?',ph:'Ej.: Alguien con mucha experiencia que sentía que no avanzaba.',tag:'LA SITUACIÓN',req:1},
+    {id:'b',l:'¿Qué hicieron juntos?',ph:'Ej.: Revisamos qué tareas le daban energía y cuáles se la sacaban.',tag:'QUÉ HICIMOS'},
+    {id:'c',l:'¿Qué cambió?',ph:'Ej.: Redefinió su rol y negoció un cambio de funciones.',tag:'QUÉ CAMBIÓ'}]},
+  {id:'tip',t:'Consejo práctico',d:'Algo simple que se puede aplicar hoy',b:1,extra:'Que el consejo sea concreto y se pueda aplicar hoy, con un ejemplo.',pre:'',campos:[
+    {id:'a',l:'¿Qué problema resuelve?',ph:'Ej.: Llegar a una entrevista sin saber qué contar de mí.',tag:'EL PROBLEMA',req:1},
+    {id:'b',l:'¿Cuál es el consejo o el sistema?',ph:'Ej.: Preparar tres historias cortas, cada una con un resultado medible.',tag:'EL CONSEJO',req:1},
+    {id:'c',l:'¿Cómo se aplica?',ph:'Ej.: Escribilas hoy, practicalas en voz alta y ajustalas con un colega.',tag:'CÓMO APLICARLO'}]}
+];
+var BRIEFS=[
+  {fmt:{tipo:'Historia corta',long:'3 a 4 párrafos',tip:'Arrancá con el contexto, nombrá el momento en que algo hizo clic y cerrá con qué cambia para vos. Sin moraleja obvia al final.'},
+   vis:{tipo:'Foto de tu entorno de trabajo o de un proceso',comp:'Naturalidad por sobre producción; luz natural siempre que sea posible.',tools:'Tu celular, Snapseed, Canva'},
+   pub:{fn:'Post de texto con imagen',etq:'Etiquetá a quien fue parte solo si es genuino',momento:'Martes a jueves, mañana o mediodía',cierre:'Pregunta abierta: ¿les pasó algo parecido?'}},
+  {fmt:{tipo:'Consejo práctico',long:'3 a 5 párrafos cortos o un carrusel',tip:'Un solo consejo, un ejemplo y un paso para hoy. Si tenés dos, son dos posts.'},
+   vis:{tipo:'Diagrama simple o esquema propio',comp:'Puede ser a mano y fotografiado: que se entienda en cinco segundos, letra grande, máximo tres elementos.',tools:'Canva, papel y marcador, Miro'},
+   pub:{fn:'Post con imagen, o carrusel si querés desarrollar más',etq:'Solo si involucró a alguien que vale mencionar',momento:'Miércoles o jueves a la mañana',cierre:'Pregunta específica: ¿cómo lo resolverían ustedes?'}},
+  {fmt:{tipo:'Postura con punto de vista',long:'3 párrafos: contexto, tu lectura, implicación práctica',tip:'Si citás algo externo, poné siempre tu opinión: sin tu voz es solo un reposteo.'},
+   vis:{tipo:'Captura con anotación o infografía propia',comp:'Captura del titular que referenciás, con tu nombre o logo en el ángulo y los colores de tu identidad.',tools:'Canva, captura de pantalla más Snapseed'},
+   pub:{fn:'Post con imagen; si el análisis es largo, considerá un artículo de LinkedIn',etq:'Podés etiquetar a la publicación o la persona que referenciás',momento:'Lunes o martes, al inicio de la semana',cierre:'Pregunta de perspectiva: ¿están viendo lo mismo en sus organizaciones?'}},
+  {fmt:{tipo:'Historia más aprendizaje',long:'4 párrafos: el error, el costo, el ajuste, lo que cambió',tip:'Evitá el cierre inspiracional: es más honesto terminar con lo que concretamente cambiaste.'},
+   vis:{tipo:'Foto tuya o imagen minimalista con texto',comp:'Si usás imagen con texto: fondo oscuro o neutro, tipografía limpia, máximo diez palabras.',tools:'Canva, tu celular'},
+   pub:{fn:'Post de texto con imagen; evitá la encuesta para este tipo',etq:'No etiquetes a nadie en posts de errores',momento:'Jueves o viernes',cierre:'Sin pregunta de engagement forzada: un cierre directo funciona mejor'}}
+];
+
+/* ── Estado ──────────────────────────────────────────────── */
+function fresh(){return{nav:'intro',name:'',gender:'F',goal:'',f:{},st:{},voz:{qi:0,ans:{},ord:null,res:'',sec:''},sample:'',gen:{tipo:'historia',tono:'directo',hook:'',campos:{},done:false,edited:''}};}
+var state=fresh();
+function save(){try{localStorage.setItem(LS,JSON.stringify(state));}catch(e){}}
+function load(){
+  try{
+    var raw=localStorage.getItem(LS);
+    if(raw){var p=JSON.parse(raw);if(p&&typeof p==='object'){var f=fresh();Object.keys(f).forEach(function(k){if(p[k]!==undefined)f[k]=p[k];});state=f;}return;}
+    var g=function(k){return localStorage.getItem(k);},nm=g('tk_li_name');
+    if(nm){
+      state.name=nm;
+      var map={ofrece:'posServicios',cliente:'posCliente',dif:'posDif',emocion:'posBenefEmoc',resultado:'posBenefFunc',prueba:'posPrueba',h1:'stProb',h2:'stCambio',h3:'stPasos',h4:'stRes',h5:'stImp'};
+      Object.keys(map).forEach(function(k){var v=g('tk_li_f_'+map[k]);if(v)state.f[k]=v;});
+      var r=g('tk_li_testResult');if(r&&ROLES[r])state.voz.res=r;
+    }
+  }catch(e){}
+}
+
+/* ── Utilidades ──────────────────────────────────────────── */
+function $(id){return document.getElementById(id);}
+function esc(s){return String(s==null?'':s).replace(/[&<>"']/g,function(c){return{'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c];});}
+function showErr(id,msg){var e=$(id);e.textContent=msg;e.classList.add('show');}
+function hideErr(id){$(id).classList.remove('show');}
+function fv(k){return (state.f[k]||'').trim();}
+function goalOf(){for(var i=0;i<GOALS.length;i++)if(GOALS[i].id===state.goal)return GOALS[i];}
+function tipoOf(id){for(var i=0;i<TIPOS.length;i++)if(TIPOS[i].id===id)return TIPOS[i];return TIPOS[0];}
+function tonoOf(id){for(var i=0;i<TONOS.length;i++)if(TONOS[i].id===id)return TONOS[i];return TONOS[0];}
+function firstName(){return (state.name||'').trim().split(' ')[0];}
+function stanceFilled(){var out=[];STANCE.forEach(function(s,i){var x=state.st[i]||{};if((x.c||'').trim()||(x.n||'').trim())out.push({i:i,t:s.t,c:(x.c||'').trim(),n:(x.n||'').trim()});});return out;}
+
+/* ── Navegación ──────────────────────────────────────────── */
+var PAGES={intro:'pgIntro',pos:'pgPos',stance:'pgStance',story:'pgStory',voice:'pgVoice',kit:'pgKit'};
+var STEP={intro:0,pos:1,stance:2,story:3,voice:4,kit:4};
+function go(v){
+  ['errIntro','errPos','errStance','errStory','errVoice','errGen'].forEach(hideErr);
+  state.nav=v;
+  Object.keys(PAGES).forEach(function(k){$(PAGES[k]).classList.toggle('on',k===v);});
+  document.querySelector('.restart').classList.toggle('hidden',v==='intro');
+  var s=STEP[v];
+  if(!s){$('progBar').classList.add('hidden');$('progTxt').textContent='LinkedIn';}
+  else{$('progBar').classList.remove('hidden');$('progTxt').textContent=(v==='kit'?'Tu kit':'Paso '+s+' de 4');$('progFill').style.width=Math.round(s/4*100)+'%';}
+  if(v==='intro')renderIntro();
+  else if(v==='pos')renderPos();
+  else if(v==='stance')renderStance();
+  else if(v==='story')renderStory();
+  else if(v==='voice')renderVoice();
+  else renderKit();
+  save();window.scrollTo(0,0);
+}
+
+/* ── INTRO ───────────────────────────────────────────────── */
+function renderIntro(){
+  $('getGrid').innerHTML=GETS.map(function(g){return '<div class="get" style="--gc:'+g.c+'"><div class="get-t">'+esc(g.t)+'</div><div class="get-b">'+esc(g.b)+'</div></div>';}).join('');
+  $('crit').innerHTML=CRIT.map(function(c){return '<div class="crit-i"><span class="crit-n">'+c.n+'</span><div><div class="crit-t">'+esc(c.t)+'</div><div class="crit-q">'+esc(c.q)+'</div></div></div>';}).join('');
+  $('nameInput').value=state.name||'';
+  document.querySelectorAll('#genderSeg button').forEach(function(b){b.classList.toggle('on',b.getAttribute('data-g')===state.gender);});
+}
+$('nameInput').addEventListener('input',function(){state.name=this.value;save();});
+$('nameInput').addEventListener('keydown',function(e){if(e.key==='Enter'){e.preventDefault();start();}});
+function start(){
+  var n=$('nameInput').value.trim();
+  if(!n){showErr('errIntro','Escribí tu nombre para poder comenzar.');return;}
+  state.name=n;go('pos');
+}
+
+/* ── PASO 1 · POSICIONAMIENTO ────────────────────────────── */
+function renderPos(){
+  $('goals').innerHTML=GOALS.map(function(g){return '<button type="button" class="goal'+(state.goal===g.id?' on':'')+'" data-action="goal" data-id="'+g.id+'" aria-pressed="'+(state.goal===g.id)+'"><span class="goal-t">'+esc(g.t)+'</span><span class="goal-b">'+esc(g.b)+'</span></button>';}).join('');
+  $('posFields').innerHTML=POS.map(function(b){return '<div class="field"><p class="field-q">'+esc(b.q)+'</p><p class="field-h">'+esc(b.h)+'</p><textarea class="ta" data-f="'+b.id+'" maxlength="400" placeholder="'+esc(b.ph)+'">'+esc(state.f[b.id]||'')+'</textarea></div>';}).join('');
+}
+function posNext(){
+  if(!state.goal){showErr('errPos','Elegí qué querés lograr con LinkedIn.');return;}
+  var miss=POS.filter(function(b){return b.req&&!fv(b.id);});
+  if(miss.length){showErr('errPos','Completá lo mínimo para seguir: '+miss.map(function(b){return '“'+b.q+'”';}).join(', ')+'.');return;}
+  go('stance');
+}
+
+/* ── PASO 2 · POSTURA ────────────────────────────────────── */
+function renderStance(){
+  $('stanceBox').innerHTML=STANCE.map(function(s,i){
+    var x=state.st[i]||{};
+    return '<div class="sc" style="--sc:'+[C.indigo,C.coral,C.tint,C.ink,C.indigo][i]+'"><div class="sc-h"><span class="sc-n">'+(i+1)+'</span><span class="sc-t">'+esc(s.t)+'</span></div><p class="sc-q">'+esc(s.h)+'</p><div class="pair"><div><label class="lbl" style="color:var(--i)">Creo que…</label><textarea class="ta" data-s="'+i+'" data-side="c" maxlength="300" placeholder="Ej.: lo que se construye despacio dura más.">'+esc(x.c||'')+'</textarea></div><div><label class="lbl" style="color:var(--coral)">No creo que…</label><textarea class="ta" data-s="'+i+'" data-side="n" maxlength="300" placeholder="Ej.: la visibilidad rápida sirva de algo sin sustancia.">'+esc(x.n||'')+'</textarea></div></div></div>';
+  }).join('');
+}
+function stanceNext(){
+  if(stanceFilled().length<2){showErr('errStance','Completá al menos dos criterios, aunque sea una sola de las dos columnas.');return;}
+  go('story');
+}
+
+/* ── PASO 3 · HISTORIA ───────────────────────────────────── */
+function renderStory(){
+  $('storyBox').innerHTML=STORY.map(function(s,i){return '<div class="sc" style="--sc:'+s.c+'"><div class="sc-h"><span class="sc-n">'+(i+1)+'</span><span class="sc-t">'+esc(s.t)+'</span></div><p class="sc-q">'+esc(s.q)+'</p><textarea class="ta" data-f="'+s.id+'" maxlength="500" placeholder="Escribí con tus palabras…">'+esc(state.f[s.id]||'')+'</textarea><p class="sc-tip">'+esc(s.tip)+'</p></div>';}).join('');
+}
+function storyNext(){
+  var n=STORY.filter(function(s){return fv(s.id);}).length;
+  if(n<3){showErr('errStory','Completá al menos tres de los cinco momentos para poder seguir.');return;}
+  go('voice');
+}
+
+/* ── PASO 4 · VOZ ────────────────────────────────────────── */
+function ensureOrder(){
+  if(state.voz.ord&&state.voz.ord.length===ROLE_QS.length)return;
+  state.voz.ord=ROLE_QS.map(function(q){
+    var a=q.opts.map(function(_,i){return i;});
+    for(var i=a.length-1;i>0;i--){var j=Math.floor(Math.random()*(i+1));var t=a[i];a[i]=a[j];a[j]=t;}
+    return a;
+  });
+}
+function renderVoice(){
+  ensureOrder();
+  var v=state.voz,box=$('voiceBox'),tot=ROLE_QS.length;
+  if(v.res){
+    var p=ROLES[v.res],sec=v.sec&&ROLES[v.sec]?'<p class="vres-d" style="margin-top:-6px"><b>Tu segundo rasgo:</b> '+esc(ROLES[v.sec].nombre.toLowerCase())+'. Podés apoyarte en él para dar más sustento a lo que decís.</p>':'';
+    box.innerHTML='<div class="vcard vres" style="--vc:'+p.color+'"><p class="vres-eye">Tu voz natural es</p><p class="vres-t">'+esc(p.nombre)+'</p><p class="vres-d">'+esc(p.desc)+'</p>'+sec+'<p class="lbl">Tus tres reglas</p><div class="rules">'+p.reglas.map(function(r,i){return '<div class="rule"><span class="rule-n">'+(i+1)+'</span><span class="rule-t">'+esc(r)+'</span></div>';}).join('')+'</div><button class="vagain" type="button" data-action="voz-again">Repetir el test</button></div>';
+  }else{
+    var q=ROLE_QS[v.qi],ord=v.ord[v.qi];
+    box.innerHTML='<div class="vcard"><div class="vbar"><i style="width:'+Math.round((v.qi+1)/tot*100)+'%"></i></div><p class="vqn">Pregunta '+(v.qi+1)+' de '+tot+'</p><p class="vq">'+esc(q.q)+'</p><div class="vopts">'+ord.map(function(oi){var sel=v.ans[v.qi]===oi;return '<button type="button" class="vopt'+(sel?' sel':'')+'" data-action="voz-pick" data-o="'+oi+'" aria-pressed="'+sel+'"><span class="vdot"></span><span>'+esc(q.opts[oi].t)+'</span></button>';}).join('')+'</div><div class="vnav"><button class="btn-ghost" type="button" data-action="voz-back"'+(v.qi===0?' disabled':'')+'>← Anterior</button><span></span></div></div>';
+  }
+  $('sampleIn').value=state.sample||'';
+  $('sampleCnt').textContent=(state.sample||'').length+' / 3000';
+}
+function vozPick(oi){
+  var v=state.voz;v.ans[v.qi]=oi;save();renderVoice();
+  setTimeout(function(){
+    if(state.nav!=='voice'||state.voz.res)return;
+    if(v.qi===ROLE_QS.length-1){vozResult();}
+    else{v.qi++;save();renderVoice();}
+  },220);
+}
+function vozResult(){
+  var sc={L:0,R:0,I:0};
+  ROLE_QS.forEach(function(q,i){var a=state.voz.ans[i];if(a!==undefined)sc[q.opts[a].k]++;});
+  var keys=['L','R','I'].sort(function(a,b){return sc[b]-sc[a];});
+  state.voz.res=keys[0];state.voz.sec=sc[keys[1]]>0?keys[1]:'';
+  save();renderVoice();
+}
+function voiceNext(){
+  if(!state.voz.res){showErr('errVoice','Terminá el test de seis preguntas para ver tu voz.');return;}
+  go('kit');
+}
+
+/* ── ADN y prompts ───────────────────────────────────────── */
+function genderTxt(){return state.gender==='M'?'masculina':state.gender==='N'?'neutra (evitá marcas de género cuando sea posible)':'femenina';}
+function buildADN(){
+  var L=[],g=goalOf(),p=state.voz.res?ROLES[state.voz.res]:null;
+  L.push('=== ADN DE MARCA PROFESIONAL ===','');
+  L.push('PERFIL');
+  if(state.name)L.push('- Nombre: '+state.name.trim());
+  L.push('- Concordancia de género al escribir sobre mí: '+genderTxt());
+  if(g)L.push('- Qué busco en LinkedIn: '+g.txt);
+  L.push('');
+  var ps=POS.filter(function(b){return fv(b.id);});
+  if(ps.length){L.push('POSICIONAMIENTO');ps.forEach(function(b){L.push('- '+b.q.replace(/[¿?]/g,'')+': '+fv(b.id));});L.push('');}
+  var st=stanceFilled();
+  if(st.length){L.push('POSTURA (lo que pienso de verdad)');st.forEach(function(x){L.push('- '+x.t+':');if(x.c)L.push('  * Creo que '+x.c.replace(/^creo que\s*/i,''));if(x.n)L.push('  * No creo que '+x.n.replace(/^no creo que\s*/i,''));});L.push('');}
+  var hs=STORY.filter(function(s){return fv(s.id);});
+  if(hs.length){L.push('HISTORIA');hs.forEach(function(s){L.push('- '+s.t+': '+fv(s.id));});L.push('');}
+  if(p){
+    L.push('VOZ');
+    L.push('- Voz natural: '+p.nombre+'. '+p.desc);
+    if(state.voz.sec&&ROLES[state.voz.sec])L.push('- Rasgo secundario: '+ROLES[state.voz.sec].nombre.toLowerCase());
+    L.push('- Reglas que quiero que se respeten:');
+    p.reglas.forEach(function(r){L.push('  * '+r);});
+    L.push('');
+  }
+  if((state.sample||'').trim()){L.push('MUESTRA DE CÓMO ESCRIBO (imitá el ritmo, el vocabulario y el tono, no el contenido)','"""',state.sample.trim(),'"""','');}
+  L.push('CÓMO QUIERO QUE ESCRIBAS');
+  L.push('- Primera persona, tono de conversación real, frases cortas o medianas.');
+  L.push('- Sin frases hechas, sin motivacionales genéricas y sin emojis de relleno.');
+  L.push('- No inventes datos, clientes, logros ni anécdotas: usá solo lo que está en este perfil o lo que te cuente.');
+  L.push('- Si te falta información para hacerlo bien, preguntame antes de escribir.');
+  L.push('','=== FIN DEL ADN ===');
+  return L.join('\n');
+}
+function goalLine(){var g=goalOf();return g?g.txt:'';}
+function promptTitular(){
+  return 'TAREA\nEscribí 3 opciones de titular para mi perfil de LinkedIn, de hasta 220 caracteres cada una. Cada una tiene que decir qué ofrezco y para quién, con palabras que mi cliente ideal usaría para buscarme, y dejar entrever qué tiene de distinto mi enfoque. Evitá “apasionado por”, “líder en”, “ayudo a crecer” y frases parecidas. Mi objetivo: '+goalLine()+'.\nDespués, explicá en una línea qué enfatiza cada opción.';
+}
+function promptAcerca(){
+  return 'TAREA\nEscribí la sección “Acerca de” de mi perfil de LinkedIn en primera persona: 3 o 4 párrafos cortos, máximo 1.500 caracteres. Empezá con una situación o una postura mía, no con mi cargo. Conectá mi historia con lo que ofrezco y para quién, dejá ver al menos una de mis posturas y cerrá con una línea invitando al tipo de conversación que busco. Sin listas, sin emojis, sin clichés. Mi objetivo: '+goalLine()+'.';
+}
+function postStructure(){
+  var t=tipoOf(state.gen.tipo),ton=tonoOf(state.gen.tono),out='';
+  if(state.gen.hook)out+='[GANCHO SUGERIDO PARA ABRIR (adaptalo con mis datos)]\n'+state.gen.hook+'\n\n';
+  t.campos.forEach(function(c){var v=(state.gen.campos[c.id]||'').trim();if(v)out+='['+c.tag+']\n'+v+'\n\n';});
+  out+='---\nTAREA\nRedactá un post de LinkedIn en primera persona con esta estructura. '+ton.x+' Sin emojis de relleno, sin frases motivacionales genéricas y sin viñetas si no hacen falta.'+(t.extra?' '+t.extra:'')+' Que quien lo lea sienta que lo escribió una persona real.';
+  return out;
+}
+function prefillFor(tipo){
+  var out={},st=stanceFilled();
+  if(tipo==='historia'){
+    if(fv('h1'))out.a=fv('h1');if(fv('h2'))out.b=fv('h2');if(fv('h4'))out.c=fv('h4');
+  }else if(tipo==='opinion'&&st.length){
+    var c=st.filter(function(x){return x.c;})[0],n=st.filter(function(x){return x.n;})[0];
+    if(c)out.a=c.c;if(n)out.b=n.n;
+  }
+  return out;
+}
+
+/* ── KIT ─────────────────────────────────────────────────── */
+function renderKit(){
+  var fn=firstName();
+  $('kitTitle').textContent=fn?'El kit de marca de '+fn:'Tu kit de marca';
+  $('adnPre').textContent=buildADN();
+  $('pTitular').value=promptTitular();
+  $('pAcerca').value=promptAcerca();
+  var p=state.voz.res?ROLES[state.voz.res]:ROLES.L;
+  $('checkCard').style.setProperty('--vc',p.color);
+  $('checkCard').innerHTML='<p class="lbl">Para tu '+esc(p.nombre.toLowerCase())+'</p><div class="cl">'+p.check.map(function(c){return '<div class="cl-i"><i></i><span>'+esc(c)+'</span></div>';}).join('')+'</div>';
+  renderGen();
+}
+function renderGen(){
+  var t=tipoOf(state.gen.tipo);
+  $('types').innerHTML=TIPOS.map(function(x){return '<button type="button" class="type'+(x.id===t.id?' on':'')+'" data-action="tipo" data-id="'+x.id+'" aria-pressed="'+(x.id===t.id)+'">'+esc(x.t)+'</button>';}).join('');
+  $('typeDesc').textContent=t.d;
+  $('tones').innerHTML=TONOS.map(function(x){return '<button type="button" class="type'+(x.id===state.gen.tono?' on':'')+'" data-action="tono" data-id="'+x.id+'" aria-pressed="'+(x.id===state.gen.tono)+'">'+esc(x.t)+'</button>';}).join('');
+  $('hooks').innerHTML=HOOKS[t.id].map(function(h,i){return '<button type="button" class="hook'+(state.gen.hook===h?' on':'')+'" data-action="hook" data-i="'+i+'">'+esc(h)+'</button>';}).join('');
+  var can=Object.keys(prefillFor(t.id)).length>0;
+  $('prefillBtn').classList.toggle('hidden',!t.pre);
+  $('prefillBtn').disabled=!can;
+  $('prefillNote').textContent=t.pre?(can?'Completa los campos con lo que escribiste en '+(t.pre==='story'?'tu historia.':'tu postura.'):'Todavía no escribiste nada en '+(t.pre==='story'?'tu historia.':'tu postura.')):'';
+  $('genFields').innerHTML=t.campos.map(function(c){return '<div class="field" style="margin-bottom:16px"><p class="field-q" style="font-size:14px">'+esc(c.l)+(c.req?'':' <span style="font-weight:500;color:var(--muted)">(opcional)</span>')+'</p><textarea class="ta" data-gf="'+c.id+'" maxlength="500" style="min-height:70px" placeholder="'+esc(c.ph)+'">'+esc(state.gen.campos[c.id]||'')+'</textarea></div>';}).join('');
+  if(state.gen.done){showGenOut();}else{$('genOut').classList.add('hidden');}
+}
+function showGenOut(){
+  var t=tipoOf(state.gen.tipo),b=BRIEFS[t.b];
+  $('genOut').classList.remove('hidden');
+  $('pPost').value=state.gen.edited||postStructure();
+  $('briefs').innerHTML=
+    '<div class="brief"><p class="brief-t">Formato</p><p class="brief-r"><b>'+esc(b.fmt.tipo)+'</b></p><p class="brief-r">'+esc(b.fmt.long)+'</p><p class="brief-r">'+esc(b.fmt.tip)+'</p></div>'+
+    '<div class="brief"><p class="brief-t">Imagen</p><p class="brief-r"><b>'+esc(b.vis.tipo)+'</b></p><p class="brief-r">'+esc(b.vis.comp)+'</p><p class="brief-r">Herramientas: '+esc(b.vis.tools)+'</p></div>'+
+    '<div class="brief"><p class="brief-t">Publicación</p><p class="brief-r"><b>'+esc(b.pub.fn)+'</b></p><p class="brief-r">Etiquetas: '+esc(b.pub.etq)+'</p><p class="brief-r">Cuándo: '+esc(b.pub.momento)+'</p><p class="brief-r">Cierre: '+esc(b.pub.cierre)+'</p></div>';
+}
+function refreshOut(){if(state.gen.done&&!state.gen.edited)$('pPost').value=postStructure();}
+function genBuild(){
+  var t=tipoOf(state.gen.tipo);
+  var missing=t.campos.filter(function(c){return c.req&&!(state.gen.campos[c.id]||'').trim();});
+  if(missing.length){showErr('errGen','Completá lo mínimo para poder armar la estructura: '+missing.map(function(c){return '“'+c.l+'”';}).join(' y ')+'.');return;}
+  hideErr('errGen');
+  state.gen.done=true;state.gen.edited='';save();showGenOut();
+  $('genOut').scrollIntoView({behavior:'smooth',block:'nearest'});
+}
+
+/* ── Plan en PDF para llevar a la reunión ────────────────── */
+function renderPlan(){
+  var g=goalOf(),p=state.voz.res?ROLES[state.voz.res]:null,h='';
+  h+='<div class="pd-head"><img src="'+document.querySelector('.hdr-left img').getAttribute('src')+'" alt="Tenkai"><div><div class="pd-t">La voz de tu marca en LinkedIn'+(state.name?' · '+esc(state.name):'')+'</div><div class="pd-s">Tenkai Consulting</div></div></div>';
+  if(g)h+='<div class="pd-goal"><b>Lo que busco:</b> '+esc(g.t)+'. '+esc(g.b)+'</div>';
+  h+='<div class="pd-sec">Posicionamiento</div><table class="pd-tbl">'+POS.filter(function(b){return fv(b.id);}).map(function(b){return '<tr><th>'+esc(b.q.replace(/[¿?]/g,''))+'</th><td>'+esc(fv(b.id))+'</td></tr>';}).join('')+'</table>';
+  var st=stanceFilled();
+  if(st.length){h+='<div class="pd-sec">Postura</div><table class="pd-tbl"><tr><th></th><th class="pd-c">Creo que…</th><th class="pd-n">No creo que…</th></tr>'+st.map(function(x){return '<tr><th>'+esc(x.t)+'</th><td>'+esc(x.c)+'</td><td>'+esc(x.n)+'</td></tr>';}).join('')+'</table>';}
+  var hs=STORY.filter(function(s){return fv(s.id);});
+  if(hs.length){h+='<div class="pd-sec">Historia</div><table class="pd-tbl">'+hs.map(function(s){return '<tr><th>'+esc(s.t)+'</th><td>'+esc(fv(s.id))+'</td></tr>';}).join('')+'</table>';}
+  if(p){h+='<div class="pd-sec">Voz</div><p class="pd-p"><b>'+esc(p.nombre)+'.</b> '+esc(p.desc)+'</p><ul class="pd-ul">'+p.reglas.map(function(r){return '<li>'+esc(r)+'</li>';}).join('')+'</ul>';}
+  h+='<div class="pd-sec">Para conversar en el encuentro</div><ul class="pd-ul"><li>¿Qué parte de este material me cuesta más sostener en público?</li><li>¿Qué postura de las que escribí estoy dispuesta o dispuesto a defender con mi nombre?</li><li>¿Qué primer post puedo publicar esta semana?</li></ul>';
+  h+='<div class="pd-foot">tenkai.com.ar · © 2026 TENKAI CONSULTING</div>';
+  $('planDoc').innerHTML=h;
+}
+
+/* ── Copiar / descargar (con respaldo para iframes) ──────── */
+function copyText(txt,cb){
+  function fallback(){
+    try{
+      var ta=document.createElement('textarea');ta.value=txt;ta.setAttribute('readonly','');ta.style.cssText='position:fixed;top:0;left:0;opacity:0';
+      document.body.appendChild(ta);ta.select();var ok=document.execCommand('copy');document.body.removeChild(ta);cb(ok);
+    }catch(e){cb(false);}
+  }
+  if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.writeText(txt).then(function(){cb(true);},fallback);}
+  else fallback();
+}
+var copyLabels={adn:'Copiar mi ADN',titular:'Copiar con mi ADN',acerca:'Copiar con mi ADN',post:'Copiar estructura'};
+function doCopy(what,btn){
+  var txt;
+  if(what==='adn')txt=buildADN();
+  else if(what==='titular')txt=buildADN()+'\n\n'+$('pTitular').value;
+  else if(what==='acerca')txt=buildADN()+'\n\n'+$('pAcerca').value;
+  else{var body=$('pPost').value;txt=$('inclAdn').checked?buildADN()+'\n\n'+body:body;}
+  copyText(txt,function(ok){
+    btn.textContent=ok?'Copiado ✓':'No se pudo copiar: seleccioná y copiá a mano';
+    btn.classList.toggle('done',ok);
+    setTimeout(function(){btn.textContent=copyLabels[what];btn.classList.remove('done');},2200);
+  });
+}
+function download(){
+  try{
+    var blob=new Blob([buildADN()],{type:'text/plain;charset=utf-8'}),a=document.createElement('a');
+    a.href=URL.createObjectURL(blob);a.download='adn-de-marca.txt';document.body.appendChild(a);a.click();document.body.removeChild(a);
+    setTimeout(function(){URL.revokeObjectURL(a.href);},500);
+  }catch(e){}
+}
+
+/* ── Eventos (delegados) ─────────────────────────────────── */
+document.addEventListener('click',function(e){
+  var el=e.target.closest('[data-action]');
+  if(!el)return;
+  var a=el.getAttribute('data-action');
+  if(a==='start')start();
+  else if(a==='gender'){state.gender=el.getAttribute('data-g');save();renderIntro();}
+  else if(a==='go')go(el.getAttribute('data-v'));
+  else if(a==='goal'){state.goal=el.getAttribute('data-id');save();renderPos();}
+  else if(a==='pos-next')posNext();
+  else if(a==='stance-next')stanceNext();
+  else if(a==='story-next')storyNext();
+  else if(a==='voz-pick')vozPick(parseInt(el.getAttribute('data-o'),10));
+  else if(a==='voz-back'){if(state.voz.qi>0){state.voz.qi--;save();renderVoice();}}
+  else if(a==='voz-again'){state.voz={qi:0,ans:{},ord:null,res:'',sec:''};save();renderVoice();}
+  else if(a==='voice-next')voiceNext();
+  else if(a==='tipo'){state.gen.tipo=el.getAttribute('data-id');state.gen.hook='';state.gen.campos={};state.gen.done=false;state.gen.edited='';save();renderGen();}
+  else if(a==='tono'){state.gen.tono=el.getAttribute('data-id');save();renderGen();refreshOut();}
+  else if(a==='hook'){var hk=HOOKS[state.gen.tipo][parseInt(el.getAttribute('data-i'),10)];state.gen.hook=(state.gen.hook===hk)?'':hk;save();renderGen();refreshOut();}
+  else if(a==='prefill'){var pf=prefillFor(state.gen.tipo);Object.keys(pf).forEach(function(k){state.gen.campos[k]=pf[k];});state.gen.edited='';save();renderGen();refreshOut();}
+  else if(a==='gen')genBuild();
+  else if(a==='gen-clear'){state.gen.campos={};state.gen.hook='';state.gen.done=false;state.gen.edited='';save();renderGen();}
+  else if(a==='copy')doCopy(el.getAttribute('data-what'),el);
+  else if(a==='download')download();
+  else if(a==='print'){renderPlan();window.print();}
+  else if(a==='restart'){$('restartConfirm').classList.remove('hidden');el.classList.add('hidden');}
+  else if(a==='restart-no'){$('restartConfirm').classList.add('hidden');$('restartBtn').classList.remove('hidden');}
+  else if(a==='restart-yes'){
+    try{localStorage.removeItem(LS);}catch(x){}
+    state=fresh();
+    $('restartConfirm').classList.add('hidden');$('restartBtn').classList.remove('hidden');
+    go('intro');
+  }
+});
+document.addEventListener('input',function(e){
+  var t=e.target,ga=t.getAttribute&&t.getAttribute.bind(t);
+  if(!ga)return;
+  if(ga('data-f')){state.f[ga('data-f')]=t.value;save();}
+  else if(ga('data-s')!==null&&ga('data-s')!==undefined){var i=ga('data-s');state.st[i]=state.st[i]||{};state.st[i][ga('data-side')]=t.value;save();}
+  else if(ga('data-gf')){state.gen.campos[ga('data-gf')]=t.value;state.gen.edited='';refreshOut();save();}
+  else if(t.id==='sampleIn'){state.sample=t.value;$('sampleCnt').textContent=t.value.length+' / 3000';save();}
+  else if(t.id==='pPost'){state.gen.edited=t.value;save();}
+});
+
+/* ── Arranque: retoma donde quedó la persona ─────────────── */
+load();
+(function(){
+  var v=state.nav;
+  if(!state.name.trim()||!PAGES[v]){go('intro');return;}
+  if(v==='kit'&&!state.voz.res)v='voice';
+  go(v);
+})();
+})();
+
+</script>
+</body>
+</html>
